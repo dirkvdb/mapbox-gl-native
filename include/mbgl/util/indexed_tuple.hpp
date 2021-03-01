@@ -30,12 +30,20 @@ public:
 
     template <class I>
     auto& get() {
+    #ifdef _WIN32
         return std::get<TypeIndex<I, Is...>::value, Ts...>(*this);
+    #else
+        return std::get<TypeIndex<I, Is...>::value>(*this);
+    #endif
     }
 
     template <class I>
     const auto& get() const {
+    #ifdef _WIN32
         return std::get<TypeIndex<I, Is...>::value, Ts...>(*this);
+    #else
+        return std::get<TypeIndex<I, Is...>::value>(*this);
+    #endif
     }
 
     template <class... Us>
