@@ -79,23 +79,26 @@ target_include_directories(
     PRIVATE ${PROJECT_SOURCE_DIR}/platform/default/include
 )
 
-include(${PROJECT_SOURCE_DIR}/vendor/icu.cmake)
 include(${PROJECT_SOURCE_DIR}/vendor/nunicode.cmake)
-include(${PROJECT_SOURCE_DIR}/vendor/sqlite.cmake)
+
+find_package(ZLIB REQUIRED)
+find_package(ICU COMPONENTS i18n uc REQUIRED)
+find_package(sqlite3 CONFIG REQUIRED)
 
 target_link_libraries(
     mbgl-core
     PRIVATE
-        $<$<NOT:$<PLATFORM_ID:Windows>>:z>
-        $<$<NOT:$<PLATFORM_ID:Windows>>:mbgl-vendor-icu>
+        ZLIB::ZLIB
+        ICU::i18n ICU::uc
         Qt5::Core
         Qt5::Gui
         Qt5::Network
         Qt5::OpenGL
         mbgl-vendor-nunicode
-        mbgl-vendor-sqlite
+        sqlite3
 )
 
+if (0)
 add_library(
     qmapboxgl SHARED
     ${PROJECT_SOURCE_DIR}/platform/qt/include/qmapbox.hpp
@@ -213,3 +216,4 @@ if(MBGL_QDOC)
 endif()
 
 add_test(NAME mbgl-test-runner COMMAND mbgl-test-runner WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
+endif()
