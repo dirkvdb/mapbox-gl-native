@@ -29,6 +29,16 @@ add_library(
 
 set(UBSAN_BLACKLIST ${PROJECT_SOURCE_DIR}/scripts/ubsan.blacklist)
 
+target_compile_definitions(
+    mbgl-compiler-options
+    INTERFACE
+        $<$<CXX_COMPILER_ID:MSVC>:NOMINMAX>
+        $<$<CXX_COMPILER_ID:MSVC>:WIN32_LEAN_AND_MEAN>
+        $<$<CXX_COMPILER_ID:MSVC>:_CRT_SECURE_NO_WARNINGS>
+        $<$<CXX_COMPILER_ID:MSVC>:_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS>
+        $<$<CXX_COMPILER_ID:MSVC>:BOOST_STRICT_CONFIG>
+)
+
 target_compile_options(
     mbgl-compiler-options
     INTERFACE
@@ -60,6 +70,10 @@ target_compile_options(
         $<$<CXX_COMPILER_ID:AppleClang>:-Wno-error=deprecated-declarations>
         $<$<CXX_COMPILER_ID:AppleClang>:-Wno-error=unused-parameter>
         $<$<CXX_COMPILER_ID:AppleClang>:-Wno-error=unused-property-ivar>
+        $<$<CXX_COMPILER_ID:MSVC>:/MP>
+        $<$<CXX_COMPILER_ID:MSVC>:/utf-8>
+        $<$<CXX_COMPILER_ID:MSVC>:/permissive->
+        $<$<CXX_COMPILER_ID:MSVC>:/wd4068 /wd4244 /wd4305>
 )
 
 target_link_libraries(
@@ -73,7 +87,7 @@ target_link_libraries(
 
 cmake_policy(SET CMP0063 NEW)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_C_EXTENSIONS OFF)

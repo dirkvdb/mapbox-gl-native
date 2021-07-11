@@ -53,7 +53,7 @@ EvaluationResult toColor(const Value& colorValue) {
                 };
             }
         },
-        [&](const std::vector<Value>& components) -> EvaluationResult {
+        [&colorValue](const std::vector<Value>& components) -> EvaluationResult {
             std::size_t len = components.size();
             bool isNumeric = std::all_of(components.begin(), components.end(), [](const Value& item) {
                 return item.template is<double>();

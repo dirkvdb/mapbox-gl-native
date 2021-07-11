@@ -18,7 +18,7 @@ target_compile_definitions(
     PRIVATE NU_BUILD_STATIC
 )
 
-target_compile_options(mbgl-vendor-nunicode PRIVATE -Wno-error)
+target_compile_options(mbgl-vendor-nunicode PRIVATE $<$<CXX_COMPILER_ID:GNU>:-Wno-error>)
 
 target_include_directories(
     mbgl-vendor-nunicode SYSTEM

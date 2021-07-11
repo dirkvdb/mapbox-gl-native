@@ -7,7 +7,7 @@
 #include <stdexcept>
 
 // Check zlib library version.
-const static bool zlibVersionCheck __attribute__((unused)) = []() {
+const static bool zlibVersionCheck [[gnu::unused]] = []() {
     const char *const version = zlibVersion();
     if (version[0] != ZLIB_VERSION[0]) {
         char message[96];

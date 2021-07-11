@@ -7,6 +7,13 @@
 #include <algorithm>
 #include <random>
 
+#if defined(_MSC_VER) && !defined(__clang__)
+#ifdef GetObject
+#undef GetObject
+#endif
+#endif
+
+
 Manifest::Manifest() {
     const char* envToken = getenv("MAPBOX_ACCESS_TOKEN");
     if (envToken != nullptr) {

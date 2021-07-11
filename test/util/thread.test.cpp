@@ -198,7 +198,7 @@ TEST(Thread, ReferenceCanOutliveThread) {
         worker.invoke(&TestWorker::send, [&] { ADD_FAILURE() << "Should never happen"; });
     }
 
-    usleep(10000);
+    std::this_thread::sleep_for(std::chrono::microseconds(10000));
 }
 
 TEST(Thread, DeletePausedThread) {

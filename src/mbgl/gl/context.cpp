@@ -59,7 +59,7 @@ Context::Context(RendererBackend& backend_)
       backend(backend_),
       stats() {}
 
-Context::~Context() {
+Context::~Context() noexcept {
     if (cleanupOnDestruction) {
         reset();
         assert(stats.isZero());

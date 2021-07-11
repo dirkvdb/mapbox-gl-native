@@ -18,7 +18,9 @@
 #include <memory>
 
 #include <cstdlib>
+#if !defined(_MSC_VER) || defined(__clang__)
 #include <unistd.h>
+#endif
 
 using namespace mbgl;
 using namespace std::literals::string_literals;

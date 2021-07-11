@@ -1,5 +1,11 @@
 #pragma once
 
+#if defined(_MSC_VER) && !defined(__clang__)
+#ifdef GetObject
+#undef GetObject
+#endif
+#endif
+
 #include <rapidjson/document.h>
 #include <rapidjson/error/en.h>
 

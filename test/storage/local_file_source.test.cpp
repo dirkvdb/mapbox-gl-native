@@ -3,9 +3,18 @@
 #include <mbgl/util/platform.hpp>
 #include <mbgl/util/run_loop.hpp>
 
-#include <unistd.h>
 #include <climits>
+#include <vector>
 #include <gtest/gtest.h>
+
+#if defined(WIN32)
+#include <Windows.h>
+#ifndef PATH_MAX
+#define PATH_MAX MAX_PATH
+#endif /* PATH_MAX */
+#else
+#include <unistd.h>
+#endif
 
 namespace {
 
@@ -135,10 +144,10 @@ TEST(LocalFileSource, URLLimit) {
 
     size_t length = PATH_MAX - toAbsoluteURL("").size();
     LocalFileSource fs;
-    char filename[length];
-    memset(filename, 'x', length);
+    std::vector<char> filename(length);
+    memset(filename.data(), 'x', length);
 
-    std::string url(filename, length);
+    std::string url(filename.data(), length);
 
     std::unique_ptr<AsyncRequest> req = fs.request({ Resource::Unknown, toAbsoluteURL(url) }, [&](Response res) {
         req.reset();
